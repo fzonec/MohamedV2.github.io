@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Mohamed Hemamda — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#090b12; --card:#10141f; --text:#eef1f6; --dim:#97a0b3;
+    --purple:#a855f7; --pink:#ec4899; --orange:#fb923c; --green:#22c55e; --border:rgba(255,255,255,.09);
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:inherit; margin:0; padding:0;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text); font-family:'Inter',system-ui,sans-serif;
+    background-image:radial-gradient(circle at 78% 30%, rgba(168,85,247,.16), transparent 45%),
+                      radial-gradient(circle at 10% 80%, rgba(251,146,60,.10), transparent 40%);
+  }
+  nav{
+    position:sticky; top:env(safe-area-inset-top,0px); z-index:10;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 5vw; border-bottom:1px solid var(--border);
+    background:rgba(9,11,18,.78); backdrop-filter:blur(10px);
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .badge-sq{
+    width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,var(--purple),var(--pink),var(--orange)); color:#04121f; font-weight:700; font-family:'Space Grotesk',sans-serif;
+  }
+  .wordmark{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem;}
+  .wordmark span{background:linear-gradient(90deg,var(--purple),var(--pink),var(--orange)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .links{display:none; gap:26px; list-style:none; font-size:.88rem; color:var(--dim);}
+  .links a{color:inherit; text-decoration:none;}
+  .links a:hover{color:var(--text);}
+  .links a.active{color:var(--text); font-weight:700;}
+  @media(min-width:860px){ .links{display:flex;} }
+  .navright{display:flex; align-items:center; gap:14px;}
+  .langtoggle{display:flex; font-family:'JetBrains Mono',monospace; font-size:.72rem; border:1px solid var(--border); border-radius:999px; overflow:hidden;}
+  .langtoggle span{padding:6px 10px; color:var(--dim); cursor:pointer;}
+  .langtoggle span.active{background:var(--purple); color:#04121f;}
+  .btn{font-family:'Inter',sans-serif; font-weight:500; font-size:.88rem; padding:10px 18px; border-radius:999px; text-decoration:none;}
+  .btn.grad{background:linear-gradient(90deg,var(--purple),var(--pink),var(--orange)); color:#04121f;}
+
+  .hero{max-width:1120px; margin:0 auto; padding:60px 5vw 90px; display:grid; grid-template-columns:1fr; gap:40px; align-items:center;}
+  @media(min-width:900px){ .hero{grid-template-columns:1.15fr .85fr;} }
+  .kicker{display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:.76rem; color:var(--orange); border:1px solid var(--border); padding:5px 12px; border-radius:999px; margin-bottom:22px;}
+  .greet{color:var(--dim); font-size:1.05rem;}
+  .greet b{color:var(--purple); font-weight:600;}
+  h1{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(2.1rem,5vw,3.1rem); line-height:1.08; margin-top:6px;}
+  .subline{font-family:'JetBrains Mono',monospace; font-size:.86rem; color:var(--dim); margin-top:16px; letter-spacing:.01em;}
+  .desc{color:var(--dim); font-size:1rem; line-height:1.6; max-width:520px; margin-top:18px;}
+  .avail{color:var(--orange); font-style:italic; font-size:.92rem; margin-top:16px; max-width:520px; line-height:1.5;}
+  .cta{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .btn.ghost{border:1px solid var(--border); color:var(--text); padding:10px 22px;}
+
+  .photoside{display:flex; flex-direction:column; align-items:center; gap:16px;}
+  .schoolbadge{font-family:'JetBrains Mono',monospace; font-size:.72rem; text-align:center; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 14px; color:var(--dim);}
+  .schoolbadge b{color:var(--orange); display:block; font-size:.78rem;}
+  .avatar{
+    width:230px; height:230px; border-radius:50%;
+    background:linear-gradient(145deg,#141a28,#0c0f18);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:3.2rem;
+    color:var(--orange);
+    box-shadow:0 0 0 1px var(--border), 0 0 60px rgba(236,72,153,.20), 0 0 120px rgba(251,146,60,.14);
+  }
+  .statuspill{display:inline-flex; align-items:center; gap:7px; font-size:.78rem; color:var(--green); border:1px solid var(--border); padding:5px 12px; border-radius:999px;}
+  .statuspill::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green);}
+
+  .about{max-width:1120px; margin:0 auto; padding:30px 5vw 90px; border-top:1px solid var(--border);}
+  .section-kicker{display:inline-flex; font-family:'JetBrains Mono',monospace; font-size:.76rem; color:var(--orange); border:1px solid var(--border); padding:5px 12px; border-radius:999px; margin:50px 0 18px;}
+  .about h2{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(1.6rem,4vw,2.3rem); max-width:640px; line-height:1.2; margin:0 auto;}
+  .about h2 .hl{background:linear-gradient(90deg,var(--purple),var(--pink),var(--orange)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .stats{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:40px;}
+  @media(min-width:760px){ .stats{grid-template-columns:repeat(4,1fr);} }
+  .statcard{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 14px; text-align:center;}
+  .statcard .num{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.7rem; background:linear-gradient(90deg,var(--purple),var(--pink),var(--orange)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .statcard .label{font-size:.76rem; color:var(--dim); margin-top:6px; line-height:1.3;}
+  .aboutgrid{display:grid; grid-template-columns:1fr; gap:28px; margin-top:44px;}
+  @media(min-width:860px){ .aboutgrid{grid-template-columns:1.1fr .9fr;} }
+  .aboutgrid p{color:var(--dim); font-size:.98rem; line-height:1.7; margin-bottom:14px;}
+  .aboutgrid strong{color:var(--text);}
+  .codecard{background:#0c0f18; border:1px solid var(--border); border-radius:14px; overflow:hidden; height:fit-content;}
+  .codecard .bar{display:flex; gap:6px; padding:12px 14px; border-bottom:1px solid var(--border); align-items:center;}
+  .codecard .bar i{width:10px; height:10px; border-radius:50%; display:inline-block;}
+  .codecard .bar i:nth-child(1){background:#ef4444;} .codecard .bar i:nth-child(2){background:#eab308;} .codecard .bar i:nth-child(3){background:#22c55e;}
+  .codecard .fname{font-family:'JetBrains Mono',monospace; font-size:.74rem; color:var(--dim); margin-left:6px;}
+  .codecard pre{padding:18px; font-family:'JetBrains Mono',monospace; font-size:.78rem; color:#a5d8ff; line-height:1.75; overflow-x:auto; white-space:pre-wrap;}
+  .codecard .k{color:var(--orange);}
+
+  .skillsgrid{display:grid; grid-template-columns:1fr; gap:16px; margin-top:40px;}
+  @media(min-width:760px){ .skillsgrid{grid-template-columns:repeat(2,1fr);} }
+  .skillcat{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px;}
+  .skillcat h3{font-family:'Space Grotesk',sans-serif; font-size:1rem; margin-bottom:12px; color:var(--orange);}
+  .skillcat .tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .skillcat .tag{font-family:'JetBrains Mono',monospace; font-size:.76rem; color:var(--dim); border:1px solid var(--border); padding:5px 10px; border-radius:6px;}
+
+  .langrow{display:flex; flex-wrap:wrap; gap:14px; margin-top:28px; justify-content:center;}
+  .langpill{display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--border); border-radius:999px; padding:8px 16px; font-size:.85rem;}
+  .langpill span{font-family:'JetBrains Mono',monospace; color:var(--orange); font-size:.78rem;}
+
+  .timeline{max-width:720px; margin:44px auto 0; padding-left:26px; border-left:2px solid var(--border);}
+  .tlitem{position:relative; margin-bottom:38px;}
+  .tlitem::before{content:''; position:absolute; left:-32px; top:4px; width:10px; height:10px; border-radius:50%; background:var(--orange); box-shadow:0 0 8px var(--orange);}
+  .tlitem .date{font-family:'JetBrains Mono',monospace; font-size:.76rem; color:var(--orange);}
+  .tlitem h3{font-family:'Space Grotesk',sans-serif; font-size:1.05rem; margin:6px 0 2px;}
+  .tlitem .org{color:var(--dim); font-size:.85rem; font-style:italic; margin-bottom:10px;}
+  .tlitem ul{color:var(--dim); font-size:.88rem; line-height:1.6; padding-left:18px;}
+  .tlitem .tags{display:flex; flex-wrap:wrap; gap:7px; margin-top:12px;}
+  .tlitem .tag{font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--dim); border:1px solid var(--border); padding:4px 9px; border-radius:6px;}
+
+  .contactgrid{display:grid; grid-template-columns:1fr; gap:24px; margin-top:44px; max-width:960px; margin-left:auto; margin-right:auto;}
+  @media(min-width:860px){ .contactgrid{grid-template-columns:.85fr 1.15fr;} }
+  .ccards{display:flex; flex-direction:column; gap:14px;}
+  .ccard{display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 18px;}
+  .ccard .icon{width:38px; height:38px; border-radius:10px; background:linear-gradient(135deg,var(--purple),var(--pink),var(--orange)); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;}
+  .ccard small{display:block; color:var(--dim); font-size:.74rem;}
+  .ccard a, .ccard .val{color:var(--text); font-size:.92rem; text-decoration:none;}
+  .cform{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:26px; display:flex; flex-direction:column; gap:16px;}
+  .cform label{font-size:.8rem; color:var(--dim); display:block; margin-bottom:6px;}
+  .cform input, .cform textarea{width:100%; background:#0c0f18; border:1px solid var(--border); border-radius:8px; padding:11px 13px; color:var(--text); font-family:'Inter',sans-serif; font-size:.9rem;}
+  .cform textarea{min-height:110px; resize:vertical;}
+  .cform button{border:none; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; font-size:.92rem; padding:13px; border-radius:8px; background:linear-gradient(90deg,var(--purple),var(--pink),var(--orange)); color:#04121f;}
+
+  .veillelist{max-width:760px; margin:40px auto 0; display:flex; flex-direction:column; gap:12px;}
+  .veilleitem{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:15px 18px;}
+  .veilleitem a{color:var(--text); font-size:.9rem; text-decoration:none; line-height:1.4;}
+  .veilleitem a:hover{color:var(--orange);}
+  .veilleitem .meta{font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--dim); white-space:nowrap; flex-shrink:0; margin-top:2px;}
+  .veille-loading{text-align:center; color:var(--dim); font-family:'JetBrains Mono',monospace; font-size:.85rem; padding:20px;}
+
+  .certgrid{display:grid; grid-template-columns:1fr; gap:16px; margin-top:40px; max-width:720px; margin-left:auto; margin-right:auto;}
+  @media(min-width:700px){ .certgrid{grid-template-columns:repeat(2,1fr);} }
+  .certcard{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; display:flex; flex-direction:column; gap:8px;}
+  .certcard .icon{width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,var(--purple),var(--pink),var(--orange)); display:flex; align-items:center; justify-content:center; font-size:1.2rem;}
+  .certcard h3{font-family:'Space Grotesk',sans-serif; font-size:1rem; margin-top:4px;}
+  .certcard .meta{font-size:.82rem; color:var(--dim);}
+  .certcard a.viewlink{margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:.78rem; color:var(--orange); text-decoration:underline; width:fit-content;}
+</style>
+</head>
+<body>
+  <nav>
+    <div class="brand">
+      <div class="badge-sq">M</div>
+      <div class="wordmark">HEMAMDA<span>.sys</span></div>
+    </div>
+    <ul class="links">
+      <li><a href="#top" data-i18n="nav.home">Accueil</a></li>
+      <li><a href="#about" data-i18n="nav.about">À propos</a></li>
+      <li><a href="#skills" data-i18n="nav.skills">Compétences</a></li>
+      <li><a href="#experience" data-i18n="nav.exp">Expérience</a></li>
+      <li><a href="#" data-i18n="nav.formation">Formation</a></li>
+      <li><a href="#" data-i18n="nav.projects">Projets</a></li>
+      <li><a href="#certifications" data-i18n="nav.cert">Certifications</a></li>
+      <li><a href="#veille" data-i18n="nav.veille">Veille techno</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <div class="navright">
+      <div class="langtoggle"><span data-lang="fr" class="active">FR</span><span data-lang="en">EN</span></div>
+      <a href="#contact" class="btn grad" data-i18n="hero.cta1">Me contacter</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="top">
+    <div>
+      <div class="kicker">⌘ SysNetwork.io</div>
+      <div class="greet" data-i18n="hero.greet">Bonjour, je suis <b>Mohamed</b></div>
+      <h1 data-i18n="hero.h1">Technicien Systèmes & Réseaux</h1>
+      <div class="subline" data-i18n="hero.subline">Active Directory · Windows Server · Virtualisation · Sécurité</div>
+      <p class="desc" data-i18n="hero.desc">
+        Apprenti chez Tunzini, en BTS SIO SISR. Je déploie, administre et sécurise
+        des infrastructures systèmes et réseaux — de l'annuaire Active Directory
+        à la supervision réseau.
+      </p>
+      <p class="avail" data-i18n="hero.avail">
+        Alternance BTS SIO SISR jusqu'en 2027 — disponible pour missions,
+        stages courts et projets techniques.
+      </p>
+      <div class="cta">
+        <a href="#contact" class="btn grad" data-i18n="hero.cta1">Me contacter</a>
+        <a href="#" class="btn ghost" data-i18n="hero.cta2">Voir mes projets</a>
+      </div>
+    </div>
+    <div class="photoside">
+      <span class="statuspill" data-i18n="hero.status">Disponible en alternance</span>
+      <div class="avatar">MH</div>
+      <div class="schoolbadge"><b>ESUP La Défense</b>BTS SIO SISR · 2025–2027</div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div style="text-align:center">
+      <div class="section-kicker" data-i18n="about.kicker">À PROPOS</div>
+      <h2 data-i18n="about.h2">Une administration <span class="hl">fiable, sécurisée</span>, opérationnelle</h2>
+    </div>
+    <div class="stats">
+      <div class="statcard"><div class="num">2</div><div class="label" data-i18n="stat.projects">Projets réalisés</div></div>
+      <div class="statcard"><div class="num">1</div><div class="label" data-i18n="stat.cert">Certification PIX</div></div>
+      <div class="statcard"><div class="num">5</div><div class="label" data-i18n="stat.skills">Domaines de compétences</div></div>
+      <div class="statcard"><div class="num">SISR</div><div class="label">BTS SIO · 2025–2027</div></div>
+    </div>
+    <div class="aboutgrid">
+      <div>
+        <p data-i18n="about.p1">Apprenti <strong>Technicien Systèmes & Réseaux</strong> chez Tunzini, je travaille
+        au quotidien sur l'administration d'infrastructures Windows Server et la
+        sécurisation d'annuaires Active Directory.</p>
+        <p data-i18n="about.p2">Mon BTS SIO SISR m'a donné une base solide en réseaux, virtualisation et
+        support — je cherche aujourd'hui à approfondir la partie sécurité et
+        supervision d'infrastructure.</p>
+      </div>
+      <div class="codecard">
+        <div class="bar"><i></i><i></i><i></i><span class="fname">profil.json</span></div>
+        <pre>{
+  <span class="k">"name"</span>: "Mohamed Hemamda",
+  <span class="k">"role"</span>: "Technicien Systèmes & Réseaux",
+  <span class="k">"apprenti_chez"</span>: "Tunzini",
+  <span class="k">"formation"</span>: "BTS SIO SISR",
+  <span class="k">"focus"</span>: [
+    "Active Directory",
+    "Windows Server",
+    "Virtualisation",
+    "Sécurité réseau"
+  ]
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="skills">
+    <div style="text-align:center">
+      <div class="section-kicker" data-i18n="skills.kicker">COMPÉTENCES</div>
+      <h2 data-i18n="skills.h2">Une <span class="hl">boîte à outils</span> systèmes & réseaux</h2>
+    </div>
+    <div class="skillsgrid">
+      <div class="skillcat">
+        <h3 data-i18n="skillcat.1">Systèmes & Support</h3>
+        <div class="tags">
+          <span class="tag">Windows 10/11</span><span class="tag">Microsoft 365</span>
+          <span class="tag" data-i18n="tag.supportinfo">Support informatique</span><span class="tag" data-i18n="tag.maintinfo">Maintenance informatique</span>
+        </div>
+      </div>
+      <div class="skillcat">
+        <h3 data-i18n="skillcat.2">Réseaux</h3>
+        <div class="tags">
+          <span class="tag">TCP/IP</span><span class="tag" data-i18n="tag.reseauxlocaux">Réseaux locaux</span><span class="tag">Wireshark</span>
+        </div>
+      </div>
+      <div class="skillcat">
+        <h3 data-i18n="skillcat.3">Virtualisation</h3>
+        <div class="tags">
+          <span class="tag">VMware</span><span class="tag">VirtualBox</span>
+        </div>
+      </div>
+      <div class="skillcat">
+        <h3 data-i18n="skillcat.4">Sécurité</h3>
+        <div class="tags">
+          <span class="tag">Active Directory</span><span class="tag" data-i18n="tag.cybernotions">Cybersécurité (notions)</span>
+        </div>
+      </div>
+    </div>
+    <div class="langrow">
+      <div class="langpill"><b data-i18n="lang.arabe">Arabe</b> <span>C2</span></div>
+      <div class="langpill"><b data-i18n="lang.espagnol">Espagnol</b> <span>C1</span></div>
+      <div class="langpill"><b data-i18n="lang.anglais">Anglais</b> <span>B2</span></div>
+    </div>
+  </section>
+
+  <section class="about" id="experience">
+    <div style="text-align:center">
+      <div class="section-kicker" data-i18n="exp.kicker">EXPÉRIENCE</div>
+      <h2 data-i18n="exp.h2">Mon <span class="hl">parcours</span> professionnel</h2>
+    </div>
+    <div class="timeline">
+      <div class="tlitem">
+        <div class="date" data-i18n="exp1.date">Janvier 2026 — Aujourd'hui</div>
+        <h3 data-i18n="exp1.title">Apprenti Support Informatique</h3>
+        <div class="org">Tunzini · Nanterre</div>
+        <ul data-i18n="exp1.list">
+          <li>Assistance et support informatique auprès des collaborateurs</li>
+          <li>Installation et configuration des postes de travail</li>
+          <li>Gestion des comptes utilisateurs et des accès (Active Directory)</li>
+          <li>Diagnostic et résolution des incidents matériels et logiciels</li>
+          <li>Suivi et maintenance du parc informatique</li>
+        </ul>
+        <div class="tags"><span class="tag">Active Directory</span><span class="tag">Windows</span><span class="tag" data-i18n="exp1.tag3">Support N1</span></div>
+      </div>
+      <div class="tlitem">
+        <div class="date" data-i18n="exp2.date">Novembre 2020</div>
+        <h3 data-i18n="exp2.title">Stage d'observation</h3>
+        <div class="org">École Robespierre · Nanterre</div>
+        <ul data-i18n="exp2.list">
+          <li>Découverte du fonctionnement d'un établissement scolaire</li>
+          <li>Observation du travail administratif</li>
+          <li>Assistance à l'organisation des activités de l'école</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="certifications">
+    <div style="text-align:center">
+      <div class="section-kicker" data-i18n="cert.kicker">CERTIFICATIONS</div>
+      <h2 data-i18n="cert.h2">Des compétences <span class="hl">validées</span></h2>
+    </div>
+    <div class="certgrid">
+      <div class="certcard">
+        <div class="icon">🎓</div>
+        <h3>PIX</h3>
+        <div class="meta">[Ton score] / 1024 · [Date d'obtention]</div>
+        <a class="viewlink" href="certificats/pix.pdf" target="_blank" rel="noopener" data-i18n="cert.view">Voir le PDF ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="veille">
+    <div style="text-align:center">
+      <div class="section-kicker" data-i18n="veille.kicker">VEILLE TECHNOLOGIQUE</div>
+      <h2 data-i18n="veille.h2">L'actualité <span class="hl">tech & sécurité</span> en direct</h2>
+      <p style="color:var(--dim); max-width:560px; margin:14px auto 0; font-size:.95rem;" data-i18n="veille.sub">Dans le cadre de mon BTS SIO, je suis quotidiennement l'actualité réseaux, systèmes et cybersécurité. Cette liste se met à jour automatiquement avec les sujets tech du moment.</p>
+    </div>
+    <div class="veillelist" id="veilleList">
+      <div class="veille-loading" data-i18n="veille.loading">Chargement de l'actualité en direct…</div>
+    </div>
+  </section>
+
+  <section class="about" id="contact">
+    <div style="text-align:center">
+      <div class="section-kicker" data-i18n="contact.kicker">CONTACT</div>
+      <h2 data-i18n="contact.h2">Travaillons <span class="hl">ensemble</span></h2>
+      <p style="color:var(--dim); max-width:520px; margin:14px auto 0; font-size:.95rem;" data-i18n="contact.sub">Alternance BTS SIO SISR jusqu'en 2027 — disponible pour missions, stages courts et projets techniques.</p>
+    </div>
+    <div class="contactgrid">
+      <div class="ccards">
+        <div class="ccard"><div class="icon">✉️</div><div><small>Email</small><a href="mailto:mohamed.hemamda07@gmail.com">mohamed.hemamda07@gmail.com</a></div></div>
+        <div class="ccard"><div class="icon">📍</div><div><small data-i18n="contact.loclabel">Localisation</small><span class="val">Nanterre, France</span></div></div>
+        <div class="ccard"><div class="icon">🐙</div><div><small>GitHub</small><a href="https://github.com/mohamedfanney" target="_blank" rel="noopener">github.com/mohamedfanney</a></div></div>
+      </div>
+      <form class="cform" id="contactForm">
+        <div>
+          <label data-i18n="form.name">Nom complet</label>
+          <input type="text" id="cf-name" placeholder="Votre nom" data-i18n-ph="form.namePh" required>
+        </div>
+        <div>
+          <label>Email</label>
+          <input type="email" id="cf-email" placeholder="vous@entreprise.com" data-i18n-ph="form.emailPh" required>
+        </div>
+        <div>
+          <label data-i18n="form.message">Message</label>
+          <textarea id="cf-message" placeholder="Décrivez votre demande..." data-i18n-ph="form.messagePh" required></textarea>
+        </div>
+        <button type="submit" data-i18n="form.submit">Envoyer le message →</button>
+      </form>
+    </div>
+  </section>
+
+<script>
+const i18n = {
+  fr: {
+    'nav.home':'Accueil','nav.about':'À propos','nav.skills':'Compétences','nav.exp':'Expérience',
+    'nav.formation':'Formation','nav.projects':'Projets','nav.cert':'Certifications','nav.veille':'Veille techno','nav.contact':'Contact',
+    'hero.greet':'Bonjour, je suis <b>Mohamed</b>',
+    'hero.h1':'Technicien Systèmes & Réseaux',
+    'hero.subline':'Active Directory · Windows Server · Virtualisation · Sécurité',
+    'hero.desc':"Apprenti chez Tunzini, en BTS SIO SISR. Je déploie, administre et sécurise des infrastructures systèmes et réseaux — de l'annuaire Active Directory à la supervision réseau.",
+    'hero.avail':"Alternance BTS SIO SISR jusqu'en 2027 — disponible pour missions, stages courts et projets techniques.",
+    'hero.cta1':'Me contacter','hero.cta2':'Voir mes projets','hero.status':'Disponible en alternance',
+    'about.kicker':'À PROPOS',
+    'about.h2':'Une administration <span class="hl">fiable, sécurisée</span>, opérationnelle',
+    'stat.projects':'Projets réalisés','stat.cert':'Certification PIX','stat.skills':'Domaines de compétences',
+    'about.p1':"Apprenti <strong>Technicien Systèmes & Réseaux</strong> chez Tunzini, je travaille au quotidien sur l'administration d'infrastructures Windows Server et la sécurisation d'annuaires Active Directory.",
+    'about.p2':"Mon BTS SIO SISR m'a donné une base solide en réseaux, virtualisation et support — je cherche aujourd'hui à approfondir la partie sécurité et supervision d'infrastructure.",
+    'skills.kicker':'COMPÉTENCES',
+    'skills.h2':'Une <span class="hl">boîte à outils</span> systèmes & réseaux',
+    'skillcat.1':'Systèmes & Support','skillcat.2':'Réseaux','skillcat.3':'Virtualisation','skillcat.4':'Sécurité',
+    'tag.supportinfo':'Support informatique','tag.maintinfo':'Maintenance informatique',
+    'tag.reseauxlocaux':'Réseaux locaux','tag.cybernotions':'Cybersécurité (notions)',
+    'lang.arabe':'Arabe','lang.espagnol':'Espagnol','lang.anglais':'Anglais',
+    'exp.kicker':'EXPÉRIENCE','exp.h2':'Mon <span class="hl">parcours</span> professionnel',
+    'exp1.date':"Janvier 2026 — Aujourd'hui",'exp1.title':'Apprenti Support Informatique',
+    'exp1.list':'<li>Assistance et support informatique auprès des collaborateurs</li><li>Installation et configuration des postes de travail</li><li>Gestion des comptes utilisateurs et des accès (Active Directory)</li><li>Diagnostic et résolution des incidents matériels et logiciels</li><li>Suivi et maintenance du parc informatique</li>',
+    'exp1.tag3':'Support N1',
+    'exp2.date':'Novembre 2020','exp2.title':"Stage d'observation",
+    'exp2.list':"<li>Découverte du fonctionnement d'un établissement scolaire</li><li>Observation du travail administratif</li><li>Assistance à l'organisation des activités de l'école</li>",
+    'contact.kicker':'CONTACT','contact.h2':'Travaillons <span class="hl">ensemble</span>',
+    'contact.sub':"Alternance BTS SIO SISR jusqu'en 2027 — disponible pour missions, stages courts et projets techniques.",
+    'contact.loclabel':'Localisation',
+    'form.name':'Nom complet','form.message':'Message','form.submit':'Envoyer le message →',
+    'form.namePh':'Votre nom','form.emailPh':'vous@entreprise.com','form.messagePh':'Décrivez votre demande...',
+    'veille.kicker':'VEILLE TECHNOLOGIQUE','veille.h2':'L\'actualité <span class="hl">tech & sécurité</span> en direct',
+    'veille.sub':"Dans le cadre de mon BTS SIO, je suis quotidiennement l'actualité réseaux, systèmes et cybersécurité. Cette liste se met à jour automatiquement avec les sujets tech du moment.",
+    'veille.loading':"Chargement de l'actualité en direct…",
+    'cert.kicker':'CERTIFICATIONS','cert.h2':'Des compétences <span class="hl">validées</span>','cert.view':'Voir le PDF ↗'
+  },
+  en: {
+    'nav.home':'Home','nav.about':'About','nav.skills':'Skills','nav.exp':'Experience',
+    'nav.formation':'Education','nav.projects':'Projects','nav.cert':'Certifications','nav.veille':'Tech watch','nav.contact':'Contact',
+    'hero.greet':"Hi, I'm <b>Mohamed</b>",
+    'hero.h1':'Systems & Network Technician',
+    'hero.subline':'Active Directory · Windows Server · Virtualization · Security',
+    'hero.desc':"Apprentice at Tunzini, studying for a BTS SIO SISR IT diploma. I deploy, administer and secure systems and network infrastructure — from Active Directory to network monitoring.",
+    'hero.avail':"Work-study programme (BTS SIO SISR) until 2027 — available for assignments, short internships and technical projects.",
+    'hero.cta1':'Contact me','hero.cta2':'View my projects','hero.status':'Available for work-study',
+    'about.kicker':'ABOUT',
+    'about.h2':'A <span class="hl">reliable, secure</span>, operational administration',
+    'stat.projects':'Completed projects','stat.cert':'PIX Certification','stat.skills':'Skill areas',
+    'about.p1':"As a <strong>Systems & Network Technician</strong> apprentice at Tunzini, I work daily on administering Windows Server infrastructure and securing Active Directory environments.",
+    'about.p2':"My BTS SIO SISR gave me a solid foundation in networking, virtualization and support — I'm now looking to deepen my skills in security and infrastructure monitoring.",
+    'skills.kicker':'SKILLS',
+    'skills.h2':'A systems & network <span class="hl">toolkit</span>',
+    'skillcat.1':'Systems & Support','skillcat.2':'Networking','skillcat.3':'Virtualization','skillcat.4':'Security',
+    'tag.supportinfo':'IT support','tag.maintinfo':'IT maintenance',
+    'tag.reseauxlocaux':'Local networks','tag.cybernotions':'Cybersecurity (basics)',
+    'lang.arabe':'Arabic','lang.espagnol':'Spanish','lang.anglais':'English',
+    'exp.kicker':'EXPERIENCE','exp.h2':'My professional <span class="hl">journey</span>',
+    'exp1.date':'January 2026 — Present','exp1.title':'IT Support Apprentice',
+    'exp1.list':'<li>Assisting and supporting staff with IT issues</li><li>Setting up and configuring workstations</li><li>Managing user accounts and access (Active Directory)</li><li>Diagnosing and fixing hardware/software incidents</li><li>Tracking and maintaining IT equipment</li>',
+    'exp1.tag3':'Tier 1 Support',
+    'exp2.date':'November 2020','exp2.title':'Observation Internship',
+    'exp2.list':'<li>Discovering how a school operates</li><li>Observing administrative work</li><li>Helping organize school activities</li>',
+    'contact.kicker':'CONTACT','contact.h2':'Let\'s work <span class="hl">together</span>',
+    'contact.sub':'Work-study programme (BTS SIO SISR) until 2027 — available for assignments, short internships and technical projects.',
+    'contact.loclabel':'Location',
+    'form.name':'Full name','form.message':'Message','form.submit':'Send message →',
+    'form.namePh':'Your name','form.emailPh':'you@company.com','form.messagePh':'Describe your request...',
+    'veille.kicker':'TECH WATCH','veille.h2':'Live <span class="hl">tech & security</span> news',
+    'veille.sub':"As part of my BTS SIO, I follow networking, systems and cybersecurity news daily. This list refreshes automatically with current tech topics.",
+    'veille.loading':'Loading live news…',
+    'cert.kicker':'CERTIFICATIONS','cert.h2':'Validated <span class="hl">skills</span>','cert.view':'View PDF ↗'
+  }
+};
+function setLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n');
+    if(i18n[lang][key]!==undefined) el.innerHTML = i18n[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(function(el){
+    var key = el.getAttribute('data-i18n-ph');
+    if(i18n[lang][key]!==undefined) el.setAttribute('placeholder', i18n[lang][key]);
+  });
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.langtoggle span').forEach(function(s){
+    s.classList.toggle('active', s.dataset.lang===lang);
+  });
+  try{ localStorage.setItem('portfolio_lang', lang); }catch(e){}
+}
+document.querySelectorAll('.langtoggle span').forEach(function(s){
+  s.addEventListener('click', function(){ setLang(s.dataset.lang); });
+});
+var savedLang = 'fr';
+try{ savedLang = localStorage.getItem('portfolio_lang') || 'fr'; }catch(e){}
+setLang(savedLang);
+
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = document.getElementById('cf-name').value;
+  var email = document.getElementById('cf-email').value;
+  var msg = document.getElementById('cf-message').value;
+  var subject = encodeURIComponent('Contact via portfolio - ' + name);
+  var body = encodeURIComponent(msg + '\n\nRépondre à : ' + email);
+  window.location.href = 'mailto:mohamed.hemamda07@gmail.com?subject=' + subject + '&body=' + body;
+});
+
+fetch('https://hacker-news.firebaseio.com/v0/topstories.json')
+  .then(function(r){ return r.json(); })
+  .then(function(ids){
+    var top = ids.slice(0,12);
+    return Promise.all(top.map(function(id){
+      return fetch('https://hacker-news.firebaseio.com/v0/item/'+id+'.json').then(function(r){ return r.json(); });
+    }));
+  })
+  .then(function(items){
+    var list = document.getElementById('veilleList');
+    var withUrl = items.filter(function(it){ return it && it.url; }).slice(0,5);
+    if(!withUrl.length){ list.innerHTML = '<div class="veille-loading">Actualité indisponible pour le moment.</div>'; return; }
+    list.innerHTML = '';
+    withUrl.forEach(function(it){
+      var div = document.createElement('div');
+      div.className = 'veilleitem';
+      var a = document.createElement('a');
+      a.href = it.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = it.title || '';
+      var meta = document.createElement('span');
+      meta.className = 'meta'; meta.textContent = '▲ ' + (it.score || 0);
+      div.appendChild(a); div.appendChild(meta);
+      list.appendChild(div);
+    });
+  })
+  .catch(function(){
+    document.getElementById('veilleList').innerHTML = '<div class="veille-loading">Impossible de charger l\'actualité en direct pour le moment.</div>';
+  });
+
+var navLinks = document.querySelectorAll('.links a');
+navLinks.forEach(function(link){
+  link.addEventListener('click', function(){
+    navLinks.forEach(function(l){ l.classList.remove('active'); });
+    link.classList.add('active');
+  });
+});
+var spySections = document.querySelectorAll('section[id]');
+if('IntersectionObserver' in window){
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var id = entry.target.getAttribute('id');
+        navLinks.forEach(function(link){
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, {rootMargin:'-40% 0px -55% 0px', threshold:0});
+  spySections.forEach(function(sec){ spy.observe(sec); });
+}
+</script>
+</body>
+</html>
